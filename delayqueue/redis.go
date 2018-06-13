@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/garyburd/redigo/redis"
-	"github.com/ouqiang/delay-queue/config"
+	"github.com/php-cpm/delay-queue/config"
 )
 
 var (

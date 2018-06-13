@@ -40,12 +40,14 @@ const (
 	DefaultRedisReadTimeout    = 180000
 	// DefaultRedisWriteTimeout Redis写入超时时间, 单位毫秒
 	DefaultRedisWriteTimeout   = 3000
+	// DefaultKeyName key名称
+	DefaultKeyName = "dq_key_"
 )
 
 // Config 应用配置
 type Config struct {
 	BindAddress       string      // http server 监听地址
-	BucketSize        int         // bucket数量
+	BucketSize        int         // bucket数量,timer 的数量
 	BucketName        string      // bucket在redis中的键名,
 	QueueName         string      // ready queue在redis中的键名
 	QueueBlockTimeout int         // 调用blpop阻塞超时时间, 单位秒, 修改此项, redis.read_timeout必须做相应调整
@@ -66,22 +68,28 @@ type RedisConfig struct {
 
 // Init 初始化配置
 func Init(path string) {
+	// &Config{} ：结构体初始化
+	// http://blog.csdn.net/xxx9001/article/details/52574501 结构体初始化
 	Setting = &Config{}
 	if path == "" {
+		// 加载默认的配置文件
 		Setting.initDefaultConfig()
 		return
 	}
 
+	// 转换配置文件
 	Setting.parse(path)
 }
 
 // 解析配置文件
 func (config *Config) parse(path string) {
+	// 加载配置文件
 	file, err := ini.Load(path)
 	if err != nil {
 		log.Fatalf("无法解析配置文件#%s", err.Error())
 	}
 
+	// bucket 参数
 	section := file.Section("")
 	config.BindAddress = section.Key("bind_address").MustString(DefaultBindAddress)
 	config.BucketSize = section.Key("bucket_size").MustInt(DefaultBucketSize)
@@ -89,6 +97,7 @@ func (config *Config) parse(path string) {
 	config.QueueName = section.Key("queue_name").MustString(DefaultQueueName)
 	config.QueueBlockTimeout = section.Key("queue_block_timeout").MustInt(DefaultQueueBlockTimeout)
 
+	// redis 相关的参数
 	config.Redis.Host = section.Key("redis.host").MustString(DefaultRedisHost)
 	config.Redis.Db = section.Key("redis.db").MustInt(DefaultRedisDb)
 	config.Redis.Password = section.Key("redis.password").MustString(DefaultRedisPassword)
@@ -104,7 +113,7 @@ func (config *Config) initDefaultConfig() {
 	config.BindAddress = DefaultBindAddress
 	config.BucketSize = DefaultBucketSize
 	config.BucketName = DefaultBucketName
-	config.QueueName = DefaultQueueName
+	config.QueueName = DefaultQueueName    // ready queue
 	config.QueueBlockTimeout = DefaultQueueBlockTimeout
 
 	config.Redis.Host = DefaultRedisHost

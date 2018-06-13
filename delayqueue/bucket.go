@@ -6,8 +6,8 @@ import (
 
 // BucketItem bucket中的元素
 type BucketItem struct {
-	timestamp int64
-	jobId     string
+	timestamp int64  // 时间戳
+	jobId     string // jobId
 }
 
 // 添加JobId到bucket中
@@ -19,6 +19,7 @@ func pushToBucket(key string, timestamp int64, jobId string) error {
 
 // 从bucket中获取延迟时间最小的JobId
 func getFromBucket(key string) (*BucketItem, error) {
+	// 返回有序集 key 中，指定区间内的成员。其中成员的位置按 score 值递增(从小到大)来排序。
 	value, err := execRedisCommand("ZRANGE", key, 0, 0, "WITHSCORES")
 	if err != nil {
 		return nil, err

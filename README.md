@@ -1,8 +1,7 @@
 # delay-queue
-[![Go Report Card](https://goreportcard.com/badge/github.com/ouqiang/delay-queue)](https://goreportcard.com/report/github.com/ouqiang/delay-queue)
-[![Downloads](https://img.shields.io/github/downloads/ouqiang/delay-queue/total.svg)](https://github.com/ouqiang/delay-queue/releases)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/ouqiang/delay-queue/blob/master/LICENSE)
-[![Release](https://img.shields.io/github/release/ouqiang/delay-queue.svg?label=Release)](https://github.com/ouqiang/delay-queue/releases)
+
+基于[ouqiang/delay-queue](https://github.com/ouqiang/delay-queue) [suhuaguo/delay-queue](https://github.com/suhuaguo/delay-queue) [moshuipan/delay-queue](https://github.com/moshuipan/delay-queue/) 代码并加入编译优化脚本
+
 
 基于Redis实现的延迟队列, 参考[有赞延迟队列设计](http://tech.youzan.com/queuing_delay)实现
 

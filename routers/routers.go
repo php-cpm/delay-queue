@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ouqiang/delay-queue/delayqueue"
+	"github.com/php-cpm/delay-queue/delayqueue"
 )
 
 // TopicRequest Job类型请求json
@@ -41,12 +41,12 @@ func Push(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	if job.Delay <= 0 || job.Delay > (1<<31) {
+	if job.Delay < 0 || job.Delay > (1<<31) {
 		resp.Write(generateFailureBody("delay 取值范围1 - (2^31 - 1)"))
 		return
 	}
 
-	if job.TTR <= 0 || job.TTR > 86400 {
+	if job.TTR < 0 || job.TTR > 86400 {
 		resp.Write(generateFailureBody("ttr 取值范围1 - 86400"))
 		return
 	}
@@ -163,6 +163,7 @@ type ResponseBody struct {
 }
 
 func readBody(resp http.ResponseWriter, req *http.Request, v interface{}) error {
+	// 一定要等到有error或EOF的时候才会返回结果，因此只能等到客户端退出时才会返回结果。
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		log.Printf("读取body错误#%s", err.Error())
@@ -179,10 +180,12 @@ func readBody(resp http.ResponseWriter, req *http.Request, v interface{}) error 
 	return nil
 }
 
+// 成功：0
 func generateSuccessBody(msg string, data interface{}) []byte {
 	return generateResponseBody(0, msg, data)
 }
 
+// 失败：1
 func generateFailureBody(msg string) []byte {
 	return generateResponseBody(1, msg, nil)
 }

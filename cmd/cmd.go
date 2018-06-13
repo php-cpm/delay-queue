@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/ouqiang/delay-queue/config"
-	"github.com/ouqiang/delay-queue/delayqueue"
-	"github.com/ouqiang/delay-queue/routers"
+	"github.com/php-cpm/delay-queue/config"
+	"github.com/php-cpm/delay-queue/delayqueue"
+	"github.com/php-cpm/delay-queue/routers"
 )
 
 // Cmd 应用入口Command
@@ -54,6 +54,7 @@ func (cmd *Cmd) parseCommandArgs() {
 
 // 运行Web Server
 func (cmd *Cmd) runWeb() {
+	// 有详细的说明：https://studygolang.com/resources/4657 讲的非常详细
 	http.HandleFunc("/push", routers.Push)
 	http.HandleFunc("/pop", routers.Pop)
 	http.HandleFunc("/finish", routers.Delete)
