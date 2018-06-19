@@ -42,12 +42,12 @@ func Push(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	if job.Delay < 0 || job.Delay > (1<<31) {
-		resp.Write(generateFailureBody("delay 取值范围1 - (2^31 - 1)"))
+		resp.Write(generateFailureBody("delay 取值范围0 - (2^31 - 1)"))
 		return
 	}
 
 	if job.TTR < 0 || job.TTR > 86400 {
-		resp.Write(generateFailureBody("ttr 取值范围1 - 86400"))
+		resp.Write(generateFailureBody("ttr 取值范围0 - 86400"))
 		return
 	}
 
