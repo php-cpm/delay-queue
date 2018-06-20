@@ -90,12 +90,14 @@ func Pop(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	type Data struct {
+        Topic string `json:"topic"`
 		Id   string `json:"id"`
 		Body string `json:"body"`
 	}
 
 	data := Data{
 		Id:   job.Id,
+        Topic: job.Topic,
 		Body: job.Body,
 	}
 

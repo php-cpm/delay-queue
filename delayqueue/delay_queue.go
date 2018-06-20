@@ -143,7 +143,7 @@ func initTimers() {
 	var bucketName string
 	for i := 0; i < config.Setting.BucketSize; i++ {
 
-		 // 每 1s 执行一次
+		// 每 1s 执行一次
 		timers[i] = time.NewTicker(1 * time.Second)
 
 		// 如果这里部署多实例的话，就会产生竞争

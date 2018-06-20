@@ -10,8 +10,8 @@ type Job struct {
 	Topic string `json:"topic" msgpack:"1"` // topic ，唯一
 	Id    string `json:"id" msgpack:"2"`    // job唯一标识ID 。客户端需要保证唯一性。有关联关系的
 	Delay int64  `json:"delay" msgpack:"3"` // 延迟时间, unix时间戳
-	TTR   int64  `json:"ttr" msgpack:"4"` // 超时时间,TTR的设计目的是为了保证消息传输的可靠性。
-	Body  string `json:"body" msgpack:"5"`// body
+	TTR   int64  `json:"ttr" msgpack:"4"`   // 超时时间,TTR的设计目的是为了保证消息传输的可靠性。
+	Body  string `json:"body" msgpack:"5"`  // body
 }
 
 // 获取Job

@@ -5,7 +5,7 @@ if [[ `uname -s` == "Darwin" ]]; then
     CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags '-w' -o dist/delay-queue-win-64
     go build -ldflags '-w' -o dist/delay-queue-macos-64
 else
-    echo "system is macos"
+    echo "system is linux"
     CGO_ENABLED=0 GOOS=macos GOARCH=amd64 go build -ldflags '-w' -o dist/delay-queue-linux-64
     CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags '-w' -o dist/delay-queue-win-64
     go build -ldflags '-w' -o dist/delay-queue-macos-64
