@@ -79,17 +79,13 @@ func Pop(topics []string) (*Job, error) {
 	// 重新放到 Bucket 中，等待重新消费。实现至少一次的逻辑。如果客户端删除了 job ，那么。调度到此 jobId 的时候，发现 job 不存在，直接在 bucket 中删除
 	timestamp := time.Now().Unix() + job.TTR
 	// 表示从 <-bucketNameChan 。这个 channel 接收一个值
-	err = pushToBucket(fmt.Sprintf(config.Setting.BucketName, 1), timestamp, job.Id) //待确认的消息放入bucket1
+	err = pushToBucket(<-bucketNameChan, timestamp, job.Id) //待确认的消息放入bucket1
 
 	return job, err
 }
 
 // Remove 删除Job
 func Remove(jobId string) error {
-	err := removeFromBucket(fmt.Sprintf(config.Setting.BucketName, 1), jobId)
-	if err != nil {
-		return err
-	}
 	return removeJob(jobId)
 }
 
